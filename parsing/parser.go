@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"bufio"
 	"os"
-	"reflect"
+	_"reflect"
 	"regex_engine/types"
 )
 
@@ -22,7 +22,7 @@ func Take_input() (string, string){
 	//taking the input from the user (pattern)
 	input_pattern,_ := reader.ReadString('\n');
 	input_pattern = input_pattern[:len(input_pattern)-1];
-	fmt.Printf("String:\t");
+	fmt.Printf("String:\t\t");
 
 	//taking the input stirng to search in 
 	input_string,_ := reader.ReadString('\n');
@@ -95,14 +95,6 @@ func Get_TypeOf(c types.Quantifier) string{
 
 func Print_Tokens()([]types.Quantifier, []types.Quantifier){ 
 	pattern , input := Take_input();
-	fmt.Printf("Hello string are %v and %v\n", pattern,input);
 	a,b := Parse_Input(pattern,input);
-	fmt.Printf("A %v and B %v\n",a,b);
-	fmt.Printf("a[0] types are %v\n",reflect.TypeOf(a[0].Data));
-	if(reflect.TypeOf(a[0].Data) == reflect.TypeOf(types.Dot{})){
-		fmt.Printf("Hurray\n");
-	}
-
-	fmt.Printf("%v\n",Get_TypeOf(a[1]));
 	return a,b;
 }
