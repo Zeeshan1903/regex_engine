@@ -10,29 +10,29 @@ type Data interface {
 	String() string;
 }
 
-type Dot struct {};
-type Asterisk struct {};
-type Qus_mark struct {} ;
-type Plus struct {};
-type Character struct {
+type Dot 			struct {};
+type Asterisk 		struct {};
+type Qus_mark 		struct {} ;
+type Plus 			struct {};
+type Character 		struct {
 	Value rune;
 }
-type Range struct {
+type Range 			struct {
 	N int;
 }
-type Open_paran struct {}
-type Close_paran struct {}
-type Open_literal struct {}
-type Close_literal struct {}
-type Dash struct {}
-type Escape struct {
+type Open_paran 	struct {}
+type Close_paran 	struct {}
+type Open_literal 	struct {}
+type Close_literal 	struct {}
+type Dash 			struct {}
+type Escape 		struct {
 	Value rune;
 }
-type Comma struct {};
-type Open_Range struct {};
-type Close_Range struct {};
+type Comma 			struct {};
+type Open_Range 	struct {};
+type Close_Range 	struct {};
 //This will contain all this above defined quantifiers 
-type Quantifier struct {
+type Quantifier 	struct {
 	Data Data;
 }
 
@@ -90,27 +90,3 @@ func (c Comma) String() string{
 	return ",";
 }
 
-
-
-
-// //This fn is used to print the type of the quantifier 
-// func (q Quantifier) String() string {
-// 	switch  q.Data.(type) {
-// 	case Dot:			return "Dot"
-// 	case Asterisk:		return "Asterisk"
-// 	case Qus_mark:		return "Qus_mark"
-// 	case Plus:			return "Plus"
-// 	case Character:		return "Character" 
-// 	case Range:			return "Range"
-// 	case Open_paran:	return "Open_paran"
-// 	case Close_Range:	return "Close_Range"
-// 	case Close_paran:	return "Close_paran"
-// 	case Open_literal:	return "Open_literal"
-// 	case Close_literal:	return "Close_literal"
-// 	case Open_Range:	return "Open_Range"
-// 	case Dash:			return "Dash"
-// 	case Escape:		return "Escape"
-// 	case Comma:			return "Comma"
-// 	default:			return "Unknown"
-// 	}
-// }
