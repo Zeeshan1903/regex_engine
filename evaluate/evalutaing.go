@@ -13,6 +13,8 @@ type State struct {
 
 
 func Range_fn(m, n int, c rune, b *[]types.Quantifier) bool {
+
+
     new_m := m
     new_n := n - new_m
 
@@ -22,6 +24,7 @@ func Range_fn(m, n int, c rune, b *[]types.Quantifier) bool {
         }
 
         switch data := (*b)[0].Data.(type) {
+
         case types.Character:
             if data.Value != c { 
                 return false
@@ -46,19 +49,24 @@ func Range_fn(m, n int, c rune, b *[]types.Quantifier) bool {
     if n == -1 {
         // Loop through until we can't match c anymore
         for len(*b) > 0 {
+
             switch data := (*b)[0].Data.(type) {
-            case types.Character:
+            
+			case types.Character:
                 if data.Value != c {
                     return true;
                 }else{
 					(*b) =(*b)[1:];
 				}
-            case types.Escape:
+            
+			case types.Escape:
                 if data.Value != c {
                     return false
                 }
-            default:
-                return true;
+            
+			default:
+            
+				return true;
             }
 
         }
@@ -68,19 +76,23 @@ func Range_fn(m, n int, c rune, b *[]types.Quantifier) bool {
     } else {
      
         for new_n != 0 && len(*b) > 0 {
-            switch data := (*b)[0].Data.(type) {
-            case types.Character:
+            
+			switch data := (*b)[0].Data.(type) {
+            
+			case types.Character:
                 if data.Value != c {
                     return true;
                 }else{
 					(*b) =(*b)[1:];
 					new_n--
 				}
-            case types.Escape:
+            
+			case types.Escape:
                 if data.Value != c {
                     return false
                 }
-            default:
+            
+			default:
                 return true;
             }
             
@@ -94,29 +106,42 @@ func Range_fn(m, n int, c rune, b *[]types.Quantifier) bool {
 
 
 func Range_value(a *[]types.Quantifier) (n, m int) {
-    if parsing.Get_TypeOf((*a)[1]) == "Comma" && parsing.Get_TypeOf((*a)[2]) == "Range" && parsing.Get_TypeOf((*a)[3]) == "Close_Range" {
-        var err error
+   
+	
+	if parsing.Get_TypeOf((*a)[1]) == "Comma" && parsing.Get_TypeOf((*a)[2]) == "Range" && parsing.Get_TypeOf((*a)[3]) == "Close_Range" {
+    
+		var err error
         n, err = strconv.Atoi((*a)[0].Data.String()) 
-        if err != nil {
+    
+		if err != nil {
             return 0, 0
         }
-        m, err = strconv.Atoi((*a)[2].Data.String())  
-        if err != nil {
+    
+		m, err = strconv.Atoi((*a)[2].Data.String())  
+    
+		if err != nil {
             return 0, 0
         }
-        *a = (*a)[4:] 
+    
+		*a = (*a)[4:] 
         return n-48, m-48
-    } else if parsing.Get_TypeOf((*a)[1]) == "Comma" && parsing.Get_TypeOf((*a)[2]) == "Close_Range" {
-        var err error
-        n, err = strconv.Atoi((*a)[0].Data.String())  
+    
+	} else if parsing.Get_TypeOf((*a)[1]) == "Comma" && parsing.Get_TypeOf((*a)[2]) == "Close_Range" {
+       
+		var err error
+        
+		n, err = strconv.Atoi((*a)[0].Data.String())  
 		
         if err != nil {
             return 0, 0
         }
-        m = -1
+        
+		m = -1
         *a = (*a)[3:] 
         return n-48, m
-    } else {
+    
+	
+	} else {
         var err error
 		
         n, err = strconv.Atoi((*a)[0].Data.String()) 
@@ -132,19 +157,26 @@ func Range_value(a *[]types.Quantifier) (n, m int) {
 }
 
 func Create_literal_array(a *[]types.Quantifier) string {
+	
 	str := ""
 
 	for len(*a) > 0 && parsing.Get_TypeOf((*a)[0]) != "Close_literal" {
 
 		if parsing.Get_TypeOf((*a)[1]) == "Dash" {
+			
 			if char1, ok1 := (*a)[0].Data.(types.Character); ok1 {
+			
 				if char2, ok2 := (*a)[2].Data.(types.Character); ok2 {
+			
 					for i := char1.Value; i <= char2.Value; i++ {
 						str += string(i)
 					}
+			
 					*a = (*a)[3:]
 					continue
+			
 				}
+			
 			}
 		}
 
@@ -162,11 +194,14 @@ func Create_literal_array(a *[]types.Quantifier) string {
 
 
 func Evaluate_literal(s string, b *[]types.Quantifier) bool {
+	
 	ch, ok :=  (*b)[0].Data.(types.Character);
+	
 	if len(*b) > 0 && ok && strings.ContainsRune(s,rune(ch.Value)) {
 		*b = (*b)[1:]
 		return true
 	}
+	
 	return false
 }
 
@@ -180,9 +215,13 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 		state.Previous = state.Current;
 
 		fmt.Printf("State.Previous value %v and *a[0] value %v len %v\n",state.Previous,(*a)[0].Data,len(*a));
+	
 		switch (*a)[0].Data.(type) {
+	
 			case types.Dot :	
-				ch, ok :=  (*b)[0].Data.(types.Character);
+	
+			ch, ok :=  (*b)[0].Data.(types.Character);
+	
 				if ok {
 					state.Current = string(ch.Value);
 				}
@@ -202,6 +241,7 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 				} else {
 					return false
 				}
+		
 			case types.Asterisk :
 				is_true := Range_fn(0,-1,[]rune(state.Previous)[0],b);
 				if !is_true{
@@ -211,6 +251,7 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 				(*b) = (*b);
 				state.Current = state.Previous;
 
+		
 			case types.Plus:
 				is_true := Range_fn(1,-1,[]rune(state.Previous)[0],b);
 				if !is_true{
@@ -230,13 +271,18 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 				state.Current = state.Previous;
 
 			case types.Open_Range:
+				
 				(*a) = (*a)[1:];
 				n,m := Range_value(a);
+				
 				var r rune = []rune(state.Previous)[0];
+				
 				is_true := Range_fn(n,m,r, b);
+				
 				if !is_true {
 					return false;
 				}
+		
 				(*a) = (*a);
 				(*b) = (*b)[1:];
 				state.Current = state.Previous;
@@ -261,13 +307,14 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 			case types.Open_literal:
 
 				ch, ok :=  (*b)[0].Data.(types.Character);
+				
 				if ok {
 					state.Current = string(ch.Value);
 				}
-			
-				
+		
 				array := Create_literal_array(a);
 				is_type := Evaluate_literal(array,b);
+		
 				if !is_type {
 					return false;
 				}	
