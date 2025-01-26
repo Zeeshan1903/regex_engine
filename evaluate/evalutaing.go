@@ -146,7 +146,6 @@ func Range_value(a *[]types.Quantifier) (n, m int) {
 		
         n, err = strconv.Atoi((*a)[0].Data.String()) 
 
-		fmt.Printf("Hurray %v\n",n);
         if err != nil {
             return 0, 0
         }
@@ -214,8 +213,6 @@ func Evaluate(a *[]types.Quantifier,b *[]types.Quantifier) bool {
 	
 		state.Previous = state.Current;
 
-		fmt.Printf("State.Previous value %v and *a[0] value %v len %v\n",state.Previous,(*a)[0].Data,len(*a));
-	
 		switch (*a)[0].Data.(type) {
 	
 			case types.Dot :	
