@@ -25,9 +25,6 @@ This regex engine includes the following features:
 - **Character Classes:**
   - `[]` for defining custom character sets/ranges
   
-- **Literals:**
-  - Supports literal characters, allowing them to be matched directly
-  
 - **Escape Characters:**
   - `\` is supported as an escape character for special characters
   
@@ -36,6 +33,6 @@ This regex engine includes the following features:
   - `{n,}` matches `n` or more occurrences
   - `{n,m}` matches between `n` and `m` occurrences
   
-- **Ranges:**
+- **Literals:**
   - Supports defining ranges inside `[]`, e.g., `[a-z]`, `[0-9]`
 
