@@ -34,5 +34,5 @@ This regex engine includes the following features:
   - `{n,m}` matches between `n` and `m` occurrences
   
 - **Literals:**
-  - Supports defining ranges inside `[]`, e.g., `[a-z]`, `[0-9]`
+  - Supports defining ranges inside `[]`, e.g., `[a-z]`, `[0-9]`...
 
