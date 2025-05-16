@@ -1,5 +1,5 @@
 //In this file I'll define the types for my regex_engine
-
+//Basic definitions of all the types same.as we have jn header files in cpp or types in ocaml...
 package types;
 
 import (
