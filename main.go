@@ -1,5 +1,5 @@
 package main
-
+//just calling all the files...currently not very robust but working....
 import (
 	"fmt"
 	_"regex_engine/types"
