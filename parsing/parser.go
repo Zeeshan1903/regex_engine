@@ -10,7 +10,7 @@ import (
 
 //We will take the raw input here and will return the queue with the parsed section in it
 
-
+//using bufio to reduce sys calls
 //Always remember that Strings are immutable datatype in golang
 
 
